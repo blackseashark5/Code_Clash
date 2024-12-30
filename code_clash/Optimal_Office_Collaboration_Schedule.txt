@@ -1,72 +1,111 @@
-//Optimal office collaboration schedule
-#include <iostream>
-#include <vector>
-#include <string>
-#include <cmath>
+#include <bits/stdc++.h>
 using namespace std;
 
-void minimize_isolation(int n, int w) 
+const int INF = 1e9;
+const int MAX_WEEKS = 52;
+const int MAX_TEAMS = 14;
+int n, w;
 
-{
-    if (w < (n - 1)) {
-        cout << "infinity" << endl;
-        return;
-    }
+int dp[MAX_WEEKS + 1][1 << (2 * MAX_TEAMS)];
+int prev[MAX_WEEKS + 1][1 << (2 * MAX_TEAMS)];
+vector<pair<int, int>> meetings[MAX_WEEKS + 1];
 
-    vector<string> schedule(w);
-    
-    for (int week = 0; week < w; 
-
-week++) {
-        string week_schedule = "";
-        
-        for (int team = 0; team < n; 
-
-team++) {
-            if (team % 2 == 0) {
-                week_schedule += '1'; 
-
- // Assign member 1 to even-indexed 
-
-teams
-            } else {
-                week_schedule += '2'; 
-
- // Assign member 2 to odd-indexed 
-
-teams
+int calcIsolation(int week, int mask1, int mask2) {
+    int isolation = 0;
+    for (int i = 0; i < n; i++) {
+        for (int j = i + 1; j < n; j++) {
+            bool meets = ((mask1 & (1 << (i * 2))) && (mask2 & (1 << (j * 2 + 1)))) ||
+                         ((mask1 & (1 << (i * 2 + 1))) && (mask2 & (1 << (j * 2))));
+            if (meets) {
+                isolation = max(isolation, week);
             }
         }
-        
-        schedule[week] = 
-
-week_schedule;
     }
+    return isolation;
+}
 
-    int isolation = ceil((double)w / 
+void computeIsolation(int week) {
+    for (int mask = 0; mask < (1 << (2 * n)); ++mask) {
+        for (int nextMask = 0; nextMask < (1 << (2 * n)); ++nextMask) {
+            bool valid = true;
+            for (int i = 0; i < n; ++i) {
+                if ((mask & (1 << (i * 2))) && (nextMask & (1 << (i * 2 + 1)))) {
+                    valid = false;
+                    break;
+                }
+            }
 
-(n - 1));
-    
-    if (isolation == 0) {
-        cout << "infinity" << endl;
-    } else {
-        cout << isolation << endl;
+            if (!valid) continue;
+
+            int isolation = calcIsolation(week, mask, nextMask);
+            if (dp[week - 1][mask] + isolation < dp[week][nextMask]) {
+                dp[week][nextMask] = dp[week - 1][mask] + isolation;
+                prev[week][nextMask] = mask;
+            }
+        }
     }
+}
 
-    for (int i = 0; i < w; i++) {
-        cout << schedule[i] << endl;
+void initializeDP() {
+    memset(dp, INF, sizeof(dp));
+    dp[0][0] = 0;
+}
+
+void backtrackSchedule(int bestMask, vector<vector<int>>& schedule) {
+    int currentMask = bestMask;
+    for (int week = w - 1; week >= 0; --week) {
+        int prevMask = prev[week + 1][currentMask];
+        for (int i = 0; i < n; ++i) {
+            if ((currentMask & (1 << (i * 2))) && !(prevMask & (1 << (i * 2)))) {
+                schedule[week][i] = 1;
+            } else if ((currentMask & (1 << (i * 2 + 1))) && !(prevMask & (1 << (i * 2 + 1)))) {
+                schedule[week][i] = 2;
+            }
+        }
+        currentMask = prevMask;
     }
 }
 
 int main() {
-    int n, w;
     cin >> n >> w;
 
-    if (n <= 1 || w <= 0) {
+    if (w < n - 1) {
         cout << "infinity" << endl;
         return 0;
     }
 
-    minimize_isolation(n, w);
+    initializeDP();
+
+    for (int week = 1; week <= w; ++week) {
+        computeIsolation(week);
+    }
+
+    int bestIsolation = INF;
+    int bestMask = -1;
+
+    for (int mask = 0; mask < (1 << (2 * n)); ++mask) {
+        if (dp[w][mask] < bestIsolation) {
+            bestIsolation = dp[w][mask];
+            bestMask = mask;
+        }
+    }
+
+    if (bestIsolation == INF) {
+        cout << "infinity" << endl;
+        return 0;
+    }
+
+    vector<vector<int>> schedule(w, vector<int>(n));
+
+    backtrackSchedule(bestMask, schedule);
+
+    cout << bestIsolation << endl;
+    for (int week = 0; week < w; ++week) {
+        for (int i = 0; i < n; ++i) {
+            cout << schedule[week][i];
+        }
+        cout << endl;
+    }
+
     return 0;
 }
