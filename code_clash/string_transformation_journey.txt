@@ -1,0 +1,59 @@
+#include <iostream>
+#include <unordered_set>
+#include <queue>
+#include <string>
+#include <vector>
+using namespace std;
+bool is_adjacent(const string& word1, const string& word2) {
+    int differences = 0;
+    for (size_t i = 0; i < word1.size(); i++) {
+        if (word1[i] != word2[i]) {
+            differences++;
+            if (differences > 1) return false;
+        }
+    }
+    return differences == 1;
+}
+int word_transformation(int n, int m, vector<string>& word_list, const string& start, const string& target) {
+    unordered_set<string> word_set(word_list.begin(), word_list.end());
+    word_set.insert(start);
+    if (word_set.find(target) == word_set.end()) return -1;
+
+    queue<pair<string, int>> q;
+    unordered_set<string> visited;
+
+    q.push({start, 1});
+    visited.insert(start);
+    while (!q.empty()) {
+        auto [current_word, steps] = q.front();
+        q.pop();
+        if (current_word == target) return steps;
+        vector<string> neighbors;
+        for (const string& word : word_set) {
+            if (is_adjacent(current_word, word) && visited.find(word) == visited.end()) {
+                neighbors.push_back(word);
+            }
+        }
+        for (const string& neighbor : neighbors) {
+            visited.insert(neighbor);
+            q.push({neighbor, steps + 1});
+        }
+    }
+    return -1;
+}
+int main() {
+    int n, m;
+    cout << "Enter the number of words in the list and the maximum word length:\n";
+    cin >> n >> m;
+    vector<string> word_list(n);
+    cout << "Enter the words in the list:\n";
+    for (int i = 0; i < n; i++) {
+        cin >> word_list[i];
+    }
+    string start, target;
+    cout << "Enter the start and target words:\n";
+    cin >> start >> target;
+    int result = word_transformation(n, m, word_list, start, target);
+    cout << result << endl;
+    return 0;
+}

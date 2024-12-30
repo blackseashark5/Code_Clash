@@ -1,0 +1,46 @@
+#include <iostream>
+#include <vector>
+#include <algorithm>
+using namespace std;
+int max_treasure = 0;
+vector<vector<bool>> visited;
+vector<string> grid;
+const int dx[] = {-1, 1, 0, 0};
+const int dy[] = {0, 0, -1, 1};
+
+void dfs(int x, int y, int treasure_count, int n, int m) {
+    max_treasure = max(max_treasure, treasure_count);
+    visited[x][y] = true;
+
+    for (int i = 0; i < 4; i++) {
+        int nx = x + dx[i];
+        int ny = y + dy[i];
+
+        if (nx >= 0 && nx < n && ny >= 0 && ny < m && !visited[nx][ny] && grid[nx][ny] != '#') {
+            dfs(nx, ny, treasure_count + (grid[nx][ny] == 'T' ? 1 : 0), n, m);
+        }
+    }
+
+    visited[x][y] = false;  // Backtrack
+}
+
+int main() {
+    int n, m;
+    cin >> n >> m;
+
+    grid.resize(n);
+    visited.assign(n, vector<bool>(m, false));
+
+    for (int i = 0; i < n; i++) {
+        cin >> grid[i];
+    }
+
+    int sx, sy;
+    cin >> sx >> sy;
+
+    dfs(sx, sy, 0, n, m);
+
+    cout << max_treasure << endl;
+
+    return 0;
+}

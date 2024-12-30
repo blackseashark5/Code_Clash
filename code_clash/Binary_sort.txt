@@ -1,0 +1,55 @@
+#q1
+#include <iostream>
+#include <vector>
+
+using namespace std;
+
+void binary_insertion_sort(vector<int>& arr) {
+    int n = arr.size();
+    
+    for (int i = 1; i < n; i++) {
+        int key = arr[i];
+        int low = 0, high = i;
+        
+        while (low < high) {
+            int mid = low + (high - low) / 2;
+            if (arr[mid] < key) {
+                low = mid + 1;
+            } else {
+                high = mid;
+            }
+        }
+
+        for (int j = i; j > low; j--) {
+            arr[j] = arr[j - 1];
+        }
+
+        arr[low] = key;
+    }
+}
+
+int main() {
+    int n;
+    cout << "Enter number of elements: ";
+    cin >> n;
+    
+    vector<int> arr(n);
+    cout << "Enter the elements: ";
+    for (int i = 0; i < n; i++) {
+        cin >> arr[i];
+    }
+
+    binary_insertion_sort(arr);
+
+    cout << "Sorted array: ";
+    for (int i = 0; i < n; i++) {
+        cout << arr[i] << " ";
+    }
+    cout << endl;
+
+    return 0;
+}
+
+
+
+
