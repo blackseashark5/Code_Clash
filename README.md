@@ -16,7 +16,6 @@ This event provided us with a chance to showcase our problem-solving skills, col
 
 ## **Problem Overview and Approach**
 
-
 ### **1. Binary Sort**
 In this problem, we were tasked with sorting an array of integers using an efficient sorting algorithm. We decided to implement **Binary Sort**, which is a more efficient variation of the traditional **Insertion Sort**. 
 
@@ -71,13 +70,27 @@ This problem required us to minimize isolation in a schedule where each member o
 
 ## **Linked List Problem**
 
+The linked list problem involved implementing a **Singly Linked List** with operations such as appending, prepending, inserting after a node, deleting a node, updating node data, and printing the list. The main idea was to work with pointers to dynamically manage the list.
 
-Once the code for the linked list problem is available, we will update this section to include a detailed explanation of how we approached and solved the linked list problem.
+### **Approach:**
+- **Singly Linked List Structure:** We defined a `Node` class with `data` and `next` attributes to represent each element in the list. The head pointer points to the first node in the list.
+- We implemented various operations like:
+  - **appendNode()**: Adds a new node to the end of the list.
+  - **prependNode()**: Adds a new node at the beginning of the list.
+  - **insertNodeAfter()**: Inserts a new node after an existing node.
+  - **deleteNodeByKey()**: Deletes a node with a specific key.
+  - **updateNodeByKey()**: Updates a node’s data given a key.
+  - **print()**: Prints all the nodes in the list.
+
+### **Why it’s effective:**
+- **Dynamic Memory Allocation:** Singly Linked Lists are dynamic in nature, meaning the list can grow and shrink as needed without a fixed size.
+- **Efficiency:** Operations like insertion and deletion can be performed in O(1) time, making the list more efficient in certain use cases compared to arrays.
+- **Flexibility:** Linked lists are useful in scenarios where memory usage needs to be optimized or when the size of the list is unpredictable.
 
 ---
 
 ## **Conclusion**
-This coding challenge was a great learning opportunity for our team. Each problem provided us with a unique chance to apply different algorithms and data structures, such as **DFS**, **BFS**, **Binary Search**, and **Round-Robin scheduling**, to real-world problems. Through collaboration and careful consideration of the problem constraints, we were able to find effective and optimized solutions for all the challenges presented to us.
+This coding challenge was a great learning opportunity for our team. Each problem provided us with a unique chance to apply different algorithms and data structures, such as **DFS**, **BFS**, **Binary Search**, **Round-Robin scheduling**, and **Linked Lists**, to real-world problems. Through collaboration and careful consideration of the problem constraints, we were able to find effective and optimized solutions for all the challenges presented to us.
 
 We hope our approach showcases our problem-solving skills and ability to adapt to different algorithmic challenges efficiently. We also believe that these solutions are not only correct but also optimized, ensuring scalability and minimal computational overhead.
 
