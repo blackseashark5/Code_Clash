@@ -54,21 +54,21 @@ In this challenge, the goal was to transform one word into another, changing one
 - **Simplicity and Accuracy:** BFS is a natural fit for this problem, ensuring correctness while also optimizing the search process.
 
 ### **4. Optimal Office Collaboration Schedule**
-This problem required us to minimize isolation in a schedule where each member of a team must meet members from other teams over several weeks. The isolation is defined as the maximum gap between any two consecutive meetings or the gap between the first and last meetings of any pair of employees.
 
-
+This problem requires minimizing isolation in a schedule where each member of a team must meet members from other teams over several weeks. The isolation is defined as the maximum gap between any two consecutive meetings or the gap between the first and last meetings of any pair of employees.
 
 #### **Approach:**
--We used a Dynamic Programming (DP) approach to solve this problem efficiently. The key steps in the solution are:
+We used a Dynamic Programming (DP) approach to solve this problem efficiently. The key steps in the solution are:
 
-- DP Table: We maintain a DP table where dp[week][mask] represents the minimum isolation for a specific configuration of meetings in a week (mask).
-- State Transitions: For each week and mask, we calculate the isolation by considering all previous valid configurations (from the previous week).
-- Backtracking: After computing the DP table, we backtrack to extract the schedule with the least isolation.
+- **DP Table**: We maintain a DP table where `dp[week][mask]` represents the minimum isolation for a specific configuration of meetings in a week (`mask`).
+- **State Transitions**: For each week and mask, we calculate the isolation by considering all previous valid configurations (from the previous week).
+- **Backtracking**: After computing the DP table, we backtrack to extract the schedule with the least isolation.
 
 #### **Why it’s effective:**
--**Dynamic Programming**: This approach ensures that we find the optimal solution by breaking the problem into subproblems and solving them efficiently.
--**Scalability**: The method can handle up to 52 weeks and 14 teams, making it scalable for larger inputs.
--**Optimized**: The use of dynamic programming reduces the complexity of brute-force methods, making the solution feasible within the given constraints.
+- **Dynamic Programming**: This approach ensures that we find the optimal solution by breaking the problem into subproblems and solving them efficiently.
+- **Scalability**: The method can handle up to 52 weeks and 14 teams, making it scalable for larger inputs.
+- **Optimized**: The use of dynamic programming reduces the complexity of brute-force methods, making the solution feasible within the given constraints.
+
 ---
 
 ## **Linked List Problem**
