@@ -1,0 +1,71 @@
+#include <iostream>
+#include <vector>
+#include <string>
+#include <cmath>
+using namespace std;
+
+void minimize_isolation(int n, int w) 
+
+{
+    if (w < (n - 1)) {
+        cout << "infinity" << endl;
+        return;
+    }
+
+    vector<string> schedule(w);
+    
+    for (int week = 0; week < w; 
+
+week++) {
+        string week_schedule = "";
+        
+        for (int team = 0; team < n; 
+
+team++) {
+            if (team % 2 == 0) {
+                week_schedule += '1'; 
+
+ // Assign member 1 to even-indexed 
+
+teams
+            } else {
+                week_schedule += '2'; 
+
+ // Assign member 2 to odd-indexed 
+
+teams
+            }
+        }
+        
+        schedule[week] = 
+
+week_schedule;
+    }
+
+    int isolation = ceil((double)w / 
+
+(n - 1));
+    
+    if (isolation == 0) {
+        cout << "infinity" << endl;
+    } else {
+        cout << isolation << endl;
+    }
+
+    for (int i = 0; i < w; i++) {
+        cout << schedule[i] << endl;
+    }
+}
+
+int main() {
+    int n, w;
+    cin >> n >> w;
+
+    if (n <= 1 || w <= 0) {
+        cout << "infinity" << endl;
+        return 0;
+    }
+
+    minimize_isolation(n, w);
+    return 0;
+}
