@@ -56,16 +56,19 @@ In this challenge, the goal was to transform one word into another, changing one
 ### **4. Optimal Office Collaboration Schedule**
 This problem required us to minimize isolation in a schedule where each member of a team must meet members from other teams over several weeks. The isolation is defined as the maximum gap between any two consecutive meetings or the gap between the first and last meetings of any pair of employees.
 
+
+
 #### **Approach:**
-- We started by ensuring that the number of weeks (`w`) was sufficient to accommodate all necessary meetings. If `w` was too small to allow each team member to meet all other team members, we immediately output "infinity."
-- Then, we used a **round-robin assignment strategy** to assign members to different weeks. In this strategy, each member meets with others in a cyclic order, ensuring that each pair meets at least once over the available weeks.
-- We calculated the **minimum isolation** by dividing the number of weeks by the number of team pairs, ensuring that no member is isolated for too long.
+-We used a Dynamic Programming (DP) approach to solve this problem efficiently. The key steps in the solution are:
+
+- DP Table: We maintain a DP table where dp[week][mask] represents the minimum isolation for a specific configuration of meetings in a week (mask).
+- State Transitions: For each week and mask, we calculate the isolation by considering all previous valid configurations (from the previous week).
+- Backtracking: After computing the DP table, we backtrack to extract the schedule with the least isolation.
 
 #### **Why it’s effective:**
-- **Optimal Distribution:** The round-robin strategy ensures that team members are distributed across weeks as evenly as possible, minimizing isolation.
-- **Scalability:** This approach is scalable for larger values of `n` and `w`, ensuring that the solution remains efficient even as the number of teams and weeks grows.
-- **Simplicity:** The method is straightforward and intuitive, ensuring that the schedule is as balanced as possible with minimal computational overhead.
-
+-**Dynamic Programming**: This approach ensures that we find the optimal solution by breaking the problem into subproblems and solving them efficiently.
+-**Scalability**: The method can handle up to 52 weeks and 14 teams, making it scalable for larger inputs.
+-**Optimized**: The use of dynamic programming reduces the complexity of brute-force methods, making the solution feasible within the given constraints.
 ---
 
 ## **Linked List Problem**
